@@ -1,9 +1,9 @@
 package com.mjohnsullivan.flutterwear.wear
 
 import android.os.Bundle
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.LifecycleOwner
 import com.google.android.wearable.compat.WearableActivityController
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -15,7 +15,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 
-class WearPlugin : FlutterPlugin, ActivityAware, MethodCallHandler, LifecycleObserver {
+class WearPlugin : FlutterPlugin, ActivityAware, MethodCallHandler, LifecycleObserver, DefaultLifecycleObserver {
     private var mAmbientCallback = WearableAmbientCallback()
     private var mMethodChannel: MethodChannel? = null
     private var mActivityBinding: ActivityPluginBinding? = null
@@ -111,28 +111,28 @@ class WearPlugin : FlutterPlugin, ActivityAware, MethodCallHandler, LifecycleObs
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun onCreate() {
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
         mAmbientController?.onCreate()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
         mAmbientController?.onResume()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    fun onPause() {
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
         mAmbientController?.onPause()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
         mAmbientController?.onStop()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
         mAmbientController?.onDestroy()
     }
 
